@@ -123,3 +123,45 @@ Presentation Layer:
 - Menambahkan drawer pada screen form
 - Menambahkan validasi pada form
 - Menambahkan routing pada drawer
+
+# Tugas 9
+## 1. Apakah bisa kita melakukan pengambilan data JSON tanpa membuat model terlebih dahulu? Jika iya, apakah hal tersebut lebih baik daripada membuat model sebelum melakukan pengambilan data JSON?
+
+Bisa, namun hal tersebut tidak disarankan karena akan menyulitkan kita dalam mengakses data yang diambil dari JSON, karena kita tidak tahu tipe data dari data yang diambil, sehingga kita harus mengaksesnya dengan cara yang berbeda-beda tergantung tipe datanya. Selain itu kita juga tidak dapat melakukan validasi data yang diambil, sehingga data yang diambil dapat berupa data yang tidak valid. Dan yang terakhir adalah dengan membuat model, kita dapat dengan mudah mengubah data dari JSON menjadi objek dart.
+
+## 2. Jelaskan fungsi dari CookieRequest dan jelaskan mengapa instance CookieRequest perlu untuk dibagikan ke semua komponen di aplikasi Flutter.
+
+CookieRequest digunakan untuk mengambil cookie dari hasil request autentikasi login dan logout ke server Django, instance dari CookieRequest perlu dibagikan ke semua komponen di aplikasi Flutter agar dapat digunakan oleh semua widget pada aplikasi Flutter untuk melakukan request ke server Django.
+
+## 3. Jelaskan mekanisme pengambilan data dari JSON hingga dapat ditampilkan pada Flutter.
+
+Pertama kita membuat model untuk data yang akan diambil dari JSON, beserta beberapa utility class untuk mengubah data dari JSON menjadi objek dart, lalu pada suatu async function kita melakukan request ke server Django untuk mengambil data JSON, lalu mengubah data JSON menjadi objek dart menggunakan utility class yang sudah dibuat, dan menampilkannya pada widget dengan memasukanya sebagai property dari widget.
+
+## 4. Jelaskan mekanisme autentikasi dari input data akun pada Flutter ke Django hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter.
+Flutter mengirimkan HTTP request dengan HTTP body berupa FormData dengan payload username dan password yang berisi username dan password dari user yang ingin login, lalu request tersebut akan diproses oleh server Django, jika request tersebut berhasil maka akan dikirimkan pesan sukses oleh Django beserta session cookie dari user tersebut. Setelah server memberikan HTTP response, Flutter akan mengambil session cookie dari response tersebut dan menyimpannya pada CookieRequest, lalu menampilkan menu pada Flutter dengan melakukan redirect dengan Navigator.
+
+## 5.  Sebutkan seluruh widget yang kamu pakai pada tugas ini dan jelaskan fungsinya masing-masing.
+- InkWell: Untuk membuat widget yang dapat di klik
+- TextFormField: Untuk membuat input secara umum, hal ini karena TextFormField memiliki fitur validasi input yang lengkap dan mudah digunakan, dan dapat dikostumisasi sesuai kebutuhan tipe inputnya
+- ListView: Untuk menampilkan sekumpulan data dalam bentuk list
+- Drawer: Untuk membuat drawer
+- ListItem: Untuk membuat item pada ListView
+- Column: Menampilkan sekumpulan data dalam sebuah kolom
+- SizedBox: Untuk membuat widget dengan ukuran yang sudah ditentukan
+- Padding: Memberikan padding pada widget
+- ElevatedButton: Untuk membuat button dengan tampilan yang sudah ditentukan
+
+## 6. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step! (bukan hanya sekadar mengikuti tutorial)
+- Memodifikasi server Django agar dapat melakukan autentikasi
+- Membuat model dan utility function untuk data yang akan diambil dari JSON
+- Menambahkan provider dan cookie request pada main.dart
+- Membuat screen untuk menampilkan form login
+- Menambahkan logout handling pada menu
+- Menambahkan tambah item pada menu
+- Membuat screen untuk menampilkan form tambah item
+- Menambahkan validasi pada form tambah item
+- Menambahkan http request untuk menambah item
+- Menambahkan http request untuk mengambil item
+- Menambahkan screen list item
+- Menambahkan card untuk item
+- Menambahkan screen untuk detail item

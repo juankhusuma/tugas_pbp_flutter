@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:tugas_pbp_flutter/screen/form.dart";
 import "package:tugas_pbp_flutter/screen/home.dart";
+import "package:tugas_pbp_flutter/screen/products_list.dart";
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({
@@ -45,7 +46,17 @@ class LeftDrawer extends StatelessWidget {
               Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) => const ItemForm()));
             },
-          )
+          ),
+          ListTile(
+            title: const Text('Daftar Game'),
+            onTap: () {
+              // Route menu ke halaman produk
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ProductPage()),
+              );
+            },
+          ),
         ],
       ),
     );

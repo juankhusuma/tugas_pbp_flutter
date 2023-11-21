@@ -1,10 +1,12 @@
 import "package:flutter/material.dart";
+import "package:pbp_django_auth/pbp_django_auth.dart";
 import "package:tugas_pbp_flutter/screen/home.dart";
 import "package:tugas_pbp_flutter/widgets/left_drawer.dart";
+import "package:provider/provider.dart";
+import "dart:convert";
 
 class ItemForm extends StatefulWidget {
   const ItemForm({super.key});
-
   @override
   State<ItemForm> createState() => _ItemFormState();
 }
@@ -18,6 +20,7 @@ class _ItemFormState extends State<ItemForm> {
 
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
     return Scaffold(
       drawer: const LeftDrawer(),
       appBar: AppBar(
@@ -128,40 +131,37 @@ class _ItemFormState extends State<ItemForm> {
                 child: Padding(
                   padding: const EdgeInsets.all(8),
                   child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                title: const Text("Proses Berhasil"),
-                                content: SingleChildScrollView(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text("Nama Item: $_name"),
-                                      Text("Deskripsi Item: $_description"),
-                                      Text("Jumlah Item: $_amount"),
-                                      Text("Harga Item: $_price"),
-                                    ],
-                                  ),
-                                ),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pushReplacement(
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const MyHomePage(title: "Home"),
-                                        ),
-                                      );
-                                    },
-                                    child: const Text("OK"),
-                                  )
-                                ],
-                              );
-                            });
+                    onPressed: () async {
+                      final response = await request.postJson(
+                          "http://localhost:8000/create-flutter/",
+                          jsonEncode(<String, String>{
+                            'name': _name,
+                            'price': _price.toString(),
+                            'description': _description,
+                            'amount': _amount.toString(),
+                          }));
+                      if (response['status'] == 'success') {
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            content: Text("Produk baru berhasil disimpan!"),
+                          ));
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const MyHomePage(
+                                      title: "Home",
+                                    )),
+                          );
+                        }
+                      } else {
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            content:
+                                Text("Terdapat kesalahan, silakan coba lagi."),
+                          ));
+                        }
                       }
                     },
                     child: const Text("Submit"),
