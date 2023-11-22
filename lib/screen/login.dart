@@ -62,11 +62,12 @@ class LoginPageState extends State<LoginPage> {
                 String password = _passwordController.text;
 
                 // TODO: Ganti URL sesuai dengan URL Django Anda
-                final response =
-                    await request.login("http://localhost:8000/auth/login/", {
-                  'username': username,
-                  'password': password,
-                });
+                final response = await request.login(
+                    "https://juan-dharmananda-tugas.pbp.cs.ui.ac.id/auth/login/",
+                    {
+                      'username': username,
+                      'password': password,
+                    });
 
                 if (request.loggedIn) {
                   String message = response['message'];

@@ -133,7 +133,7 @@ class _ItemFormState extends State<ItemForm> {
                   child: ElevatedButton(
                     onPressed: () async {
                       final response = await request.postJson(
-                          "http://localhost:8000/create-flutter/",
+                          "https://juan-dharmananda-tugas.pbp.cs.ui.ac.id/create-flutter/",
                           jsonEncode(<String, String>{
                             'name': _name,
                             'price': _price.toString(),
